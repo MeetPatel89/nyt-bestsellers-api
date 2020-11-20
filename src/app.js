@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
+const books = require('./books');
 
 const app = express();
 
@@ -17,6 +18,19 @@ app.use(cors());
 
 app.get('/', (req, res) => {
     res.send('Hello, nyt-bestsellers!');
+});
+
+app.get('/books', (req, res) => {
+    const queryObj = req.query;
+    const { search = "", sort } = queryObj;
+    let results = books.filter(book => book.title.toLowerCase().includes(search.toLowerCase()));
+    if (!Object.keys(queryObj).length) {
+        console.log('The books code ran');
+        res.json(books);
+    } else {
+        console.log('The results code ran');
+        res.json(results);
+    }
 });
 
 app.use(errorHandler = (error, req, res, next) => {
