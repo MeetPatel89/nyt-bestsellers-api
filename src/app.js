@@ -16,7 +16,7 @@ app.use(helmet());
 app.use(cors());
 
 app.get('/', (req, res) => {
-    res.send('Hello, boilerplate!');
+    res.send('Hello, nyt-bestsellers!');
 });
 
 app.use(errorHandler = (error, req, res, next) => {
